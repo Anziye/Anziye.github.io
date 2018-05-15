@@ -11,18 +11,18 @@ tags:
     - 网络
 ---
 
-# 什么是FUZZING
+## 什么是FUZZING
 Fuzzing 就是向目标程序发送畸形或者半畸形的数据以引发错误，从而找出漏洞的一种方法。
 Fuzzers基本分成两大类：generation（创建）和mutation（变异）。Generation fuzzers创建数据，
 然后发送到到目标程序， mutation fuzzers并不创建数据，而是截获程序接收的数据，然后修改数据。
 
-# 什么是SULLEY
+## 什么是SULLEY
 Sulley是一款Fuzzer工具，有优秀的崩溃报告，自动虚拟化技术。在fuzzing的过程中，可以任意时刻，
 甚至是目标程序崩溃的时候，重新启动程序到前一个状态。
 Sulley最主要的是4大模块，协议构建的过程是先进行数据报文建模，然后再连接每一个数据报文组成状
 态机，至于其他的模块是辅助fuzzing，来让用户更好地了解fuzzing的状态。
 
-# 安装SULLEY
+## 安装SULLEY
 sulley的安装在官网上有详细的[安装教程](https://github.com/OpenRCE/sulley/wiki/Windows-Installation)，但是我在安装的这个过程当中遇见了很多问题。
 
 1、版本太新的impacket会因为依赖项太多而安装不上，在所用的教程里面，尽量选用示例的库版本；

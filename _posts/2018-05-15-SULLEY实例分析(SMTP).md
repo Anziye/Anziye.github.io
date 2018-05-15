@@ -178,14 +178,11 @@ xxx@126.com在126邮箱提供的邮件页面上填写的相应信息（如发信
 
 把Script运行起来之后，直接通过console可以看到测试的进程
 
-
 也可以直接通过Sulley自带的web端口来查看，端口26000，我在本机的例子
 
 http://127.0.0.1:26000/
 
-
 如果在测试过程，Mail Server异常退出了，那script也会因为请求timeout而停下来。如果希望测试能继续下去的话，这个时候ProcMon和VMControl就可以发挥作用了，它可以帮助你重启你的目标程序或者rollback虚拟机，参考ReadMe. 如果为了事后分析而需要把测试中的流量记录下来，可以使用NetMon.
 
-等整个测试结束之后，如果一旦发现程序crash了，结合coredump文件，记录的日志/流量，我们可以就可以尝试着重现，定位问题了。
-
-关于Sulley的API的具体使用可以直接参考ReadMe和Source code。个人感觉做好Fuzzing test的重点是对于测试目标的了解，分析的越清楚，对于Requet的定义可以更加精准，这样最后产生出来的随机输入才会更有效。
+参考链接：http://blog.sina.com.cn/s/blog_714c124f01015391.html （Sulley部分）
+https://blog.csdn.net/ly930156123/article/details/51657509 （SMTP部分）

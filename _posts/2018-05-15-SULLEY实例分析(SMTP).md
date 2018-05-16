@@ -167,22 +167,15 @@ xxx@126.com在126邮箱提供的邮件页面上填写的相应信息（如发信
 
 也就是按照EHLO,MAIL FROM, RCTP TO, DATA, . , QUIT的command序列与Server交互.
 
-
 因此要对这个server的smtp实现做fuzzing test，我们就要为每个command随机产生出各种合法(valid)的数据来与Mail Server交互，这里每次command发出的数据包，我们称之为Request，比如MAIL FROM这个Request中，MAIL FROM:是不变的，但是后面跟的邮件地址是可变的(mutable)。在Sulley中，Request是按照“块（block）”结构的方式来构造的，而每个block又是有primitive，也就是一些很基本的数据类型，比如整数，字符，随机数/串之等等。比如这个Mail From的request，我们可以定义一个block，它由几个 MAIL FROM: < test @ test.com > 这几个部分组成，每个部分可以直接用一个primitive来表示
 
-搞定了这里所有的Request之后，接下来把这些request按照一个合理的顺序组织成一个Session，这样Sulley就可以根据session的定义来与Mail Server来交互。简单的讲，可以把每个Request想象成一个节点，而Session定义了节点之间的有向连接，一个A--->B代表当发完A这个请求且收到响应之后继续发B请求。值得注意的是，可以注册回调函数，这样在发出请求之前或者是收到响应之后进行相应的处理
+搞定了这里所有的Request之后，接下来把这些Request按照一个合理的顺序组织成一个Session，这样Sulley就可以根据Session的定义来与Mail Server来交互。简单的讲，可以把每个Request想象成一个节点，而Session定义了节点之间的有向连接，一个A--->B代表当发完A这个请求且收到响应之后继续发B请求。值得注意的是，可以注册回调函数，这样在发出请求之前或者是收到响应之后进行相应的处理
 
-因此我们的Session定义如下所示, （注: ehlo 和 helo都可以作为起始命令，蓝色节点为回调函数）
+[代码示例][https://github.com/Anziye/FUZZING/blob/master/smtp_right.py]
 
-一旦把这些定义清楚之后，然后结合测试环境，比如Mail Server的IP地址，端口，我们就可以完成我们的Python script。此处不贴出具体代码，只给出链接。
+直接通过Sulley自带的web端口来查看，端口26000，即http://127.0.0.1:26000/
 
-把Script运行起来之后，直接通过console可以看到测试的进程
+在我的实验过程当中没有出现异常退出的情况。【但是如果在测试过程中，Mail Server异常退出了，那script也会因为请求timeout而停下来。如果希望测试能继续下去的话，这个时候ProcMon和VMControl就可以发挥作用了，它可以帮助你重启你的目标程序或者rollback虚拟机，参考ReadMe. 如果为了事后分析而需要把测试中的流量记录下来，可以使用NetMon.】
 
-也可以直接通过Sulley自带的web端口来查看，端口26000，我在本机的例子
-
-http://127.0.0.1:26000/
-
-如果在测试过程，Mail Server异常退出了，那script也会因为请求timeout而停下来。如果希望测试能继续下去的话，这个时候ProcMon和VMControl就可以发挥作用了，它可以帮助你重启你的目标程序或者rollback虚拟机，参考ReadMe. 如果为了事后分析而需要把测试中的流量记录下来，可以使用NetMon.
-
-参考链接：http://blog.sina.com.cn/s/blog_714c124f01015391.html （Sulley部分）
-https://blog.csdn.net/ly930156123/article/details/51657509 （SMTP部分）
+参考链接：(http://blog.sina.com.cn/s/blog_714c124f01015391.html) [Sulley部分]
+(https://blog.csdn.net/ly930156123/article/details/51657509) [SMTP部分]

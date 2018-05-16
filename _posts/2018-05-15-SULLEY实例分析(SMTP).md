@@ -171,7 +171,7 @@ xxx@126.com在126邮箱提供的邮件页面上填写的相应信息（如发信
 
 搞定了这里所有的Request之后，接下来把这些Request按照一个合理的顺序组织成一个Session，这样Sulley就可以根据Session的定义来与Mail Server来交互。简单的讲，可以把每个Request想象成一个节点，而Session定义了节点之间的有向连接，一个A--->B代表当发完A这个请求且收到响应之后继续发B请求。值得注意的是，可以注册回调函数，这样在发出请求之前或者是收到响应之后进行相应的处理
 
-[代码示例] (https://github.com/Anziye/FUZZING/blob/master/smtp_right.py)
+[代码示例](https://github.com/Anziye/FUZZING/blob/master/smtp_right.py)
 
 直接通过Sulley自带的web端口来查看，端口26000，即http://127.0.0.1:26000/
 
